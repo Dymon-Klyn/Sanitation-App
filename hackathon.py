@@ -70,6 +70,8 @@ def set_curfew():
         time_of_day = simpledialog.askstring("Input", "AM or PM?", parent= main)
         print(f"Curfew starts at {curfew} {time_of_day}")
 
+        #  try and except for curfew format
+
 
 def clear_curfew():
     pass
@@ -125,12 +127,13 @@ font = ("Times New Roman", 12), command = clear, width = 12)
 
 
 spacer3 = tk.Frame(main, width = 70, height = 50)
-curfew_label = tk.Label(spacer3, text = "Curfew at:", font = ("Times New Roman", 15))
+curfew_label = tk.Label(spacer3, text = "Curfew:", font = ("Times New Roman", 15))
 
 # Curfew Frame
 curfew_frame = tk.Frame(main, width = 70, height = 50)
 curfew_frame1 = tk.Frame(curfew_frame, width = 20, height = 50)
-curfew_frame2 = tk.Frame(curfew_frame, width = 50, height = 50, bg = "yellow")
+curfew_frame2 = tk.Frame(curfew_frame, width = 50, height = 50)
+curfew_frame3 = tk.Frame(curfew_frame, width = 50, height = 50)
 
 set_curfew_butt = tk.Button(curfew_frame1, text = "Set",
 font = ("Times New Roman", 12), command = set_curfew, width = 12)
@@ -138,6 +141,8 @@ font = ("Times New Roman", 12), command = set_curfew, width = 12)
 clear_curfew_butt = tk.Button(curfew_frame1, text = "Clear",
 font = ("Times New Roman", 12), command = clear_curfew, width = 12)
 
+curfew_label1 = tk.Label(curfew_frame2, text = "Curfew starts at :", font = ("Times New Roman", 15))
+curfew_label2 = tk.Label(curfew_frame3, text = "Hours  :  Minutes", font = ("Times New Roman", 8))
 
 # Create Frame
 create_frame = tk.Frame(main, width = 70, height = 40)
@@ -178,8 +183,11 @@ curfew_label.grid(row = 0, column = 0)
 curfew_frame.pack(fill = "x")
 curfew_frame1.grid(row = 0, column = 0)
 curfew_frame2.grid(row = 0, column = 1)
+curfew_frame3.grid(row = 0, column = 2)
 set_curfew_butt.grid(row = 0, column = 0, padx = (0, 10), pady = (0,10))
 clear_curfew_butt.grid(row = 1, column = 0, padx = (0, 10), pady = (0,10))
+curfew_label1.grid(row =0, column = 0, padx = (20,0))
+curfew_label2.grid(row =0, column = 0, padx = (20,0), pady = (0,70))
 
 spacer3.pack(fill = "x")
 
