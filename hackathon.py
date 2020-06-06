@@ -48,6 +48,9 @@ def create():
     # Displays the info on upcoming
     listbox.insert("end", answer)
 
+def remove():
+    pass
+
 # This can be changed as we go along
 title = "Sanitation Alert"
 color = "red"
@@ -71,14 +74,20 @@ scrollbar = tk.Scrollbar(upcoming_frame, orient="vertical")
 listbox = tk.Listbox(upcoming_frame, width = 80, height = 5, yscrollcommand=scrollbar.set)
 scrollbar.config(command=listbox.yview)
 
-for item in data["events"]:
-    listbox.insert("end", item)
+
+listbox_remove_butt = tk.Button(upcoming_frame, text = "Remove Task",
+font = ("Times New Roman", 12), command = remove)
 
 
 spacer2 = tk.Frame(main, width = 70, height = 20)
 
 # Events Frame
 events_frame = tk.Frame(main, width = 70, height = 50, bg = "#A4F178")
+scrollbar1 = tk.Scrollbar(events_frame, orient="vertical")
+listbox1 = tk.Listbox(events_frame, width = 80, height = 5, yscrollcommand=scrollbar.set)
+scrollbar.config(command=listbox.yview)
+
+
 
 spacer3 = tk.Frame(main, width = 70, height = 20)
 
@@ -103,12 +112,15 @@ spacer1.pack(fill = "x")
 
 upcoming_frame.pack(fill = "x")
 listbox.grid(row = 0, column = 0)
-scrollbar.grid(row =0, column = 1)
+scrollbar.grid(row = 0, column = 1)
+listbox_remove_butt.grid(row = 0, column = 2)
 
 
 spacer2.pack(fill = "x")
 
 events_frame.pack(fill = "x")
+listbox1.grid(row = 0, column = 0)
+scrollbar1.grid(row = 0, column = 1)
 
 spacer3.pack(fill = "x")
 
