@@ -1,7 +1,8 @@
-## Tool to reenter society after COVID-19
+# Tool to reenter society after COVID-19
 
 # We need a JSON File to keep track of the lists
 import json
+import time
 import ctypes
 import tkinter as tk
 from tkinter import simpledialog
@@ -41,6 +42,20 @@ def load_json_data():
 data = load_json_data()
 
 
+class Clock():
+    def __init__(self):
+        self.root = tk.Tk()
+        self.label = tk.Label(curfew_frame3,text="", font=('Helvetica', 20), fg='red')
+        self.label.grid(row = 1, column =0, pady =(0,0))
+        self.update_clock()
+        self.root.mainloop()
+
+    def update_clock(self):
+        hour = time.strftime("%H")
+        minute = time.strftime("%M")
+        self.label.configure(text=f"  {hour} :  {minute}")
+        self.root.after(1000, self.update_clock)
+
 # Functions for the buttons go here
 def create():
     answer = simpledialog.askstring("Input", "New Task", parent= main)
@@ -71,13 +86,10 @@ def set_curfew():
         time_of_day = simpledialog.askstring("Input", "AM or PM?", parent= main)
         print(f"Curfew starts in {curfew} {time_of_day}")
 
+        newWindow = tk.Toplevel(curfew_frame3)
         # try and except for curfew format
 
-        # for now curfew will start at 8 just for debugging
-        curfew = 20*60 # in minutes
-        
-        while int(datetime.now().strftime("%H"))* 60 +int(datetime.now().strftime("%M")) < curfew:
-            print("you can go outside")
+        app=Clock()
 
 
 def clear_curfew():
@@ -194,7 +206,7 @@ curfew_frame3.grid(row = 0, column = 2)
 set_curfew_butt.grid(row = 0, column = 0, padx = (0, 10), pady = (0,10))
 clear_curfew_butt.grid(row = 1, column = 0, padx = (0, 10), pady = (0,10))
 curfew_label1.grid(row =0, column = 0, padx = (20,0))
-curfew_label2.grid(row =0, column = 0, padx = (20,0), pady = (0,70))
+curfew_label2.grid(row =0, column = 0, padx = (20,0), pady = (0,0))
 
 spacer3.pack(fill = "x")
 
