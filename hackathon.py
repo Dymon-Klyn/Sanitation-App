@@ -65,11 +65,18 @@ def clear():
     data["completed"] = []
     save_data(data)
 
+def set_curfew():
+        curfew = simpledialog.askstring("Input", "When does curfew start?", parent= main)
+        time_of_day = simpledialog.askstring("Input", "AM or PM?", parent= main)
+        print(f"Curfew starts at {curfew} {time_of_day}")
 
+
+def clear_curfew():
+    pass
 
 # This can be changed as we go along
 title = "Sanitation Alert"
-color = "red"
+
 
 root = tk.Tk()
 root.title(title)
@@ -108,8 +115,8 @@ events_frame = tk.Frame(main, width = 70, height = 50)
 events_frame1 = tk.Frame(events_frame, width = 20, height = 50)
 events_frame2 = tk.Frame(events_frame, width = 50, height = 50)
 scrollbar1 = tk.Scrollbar(events_frame2, orient="vertical")
-listbox1 = tk.Listbox(events_frame2, width = 80, height = 5, yscrollcommand=scrollbar.set)
-scrollbar.config(command=listbox.yview)
+listbox1 = tk.Listbox(events_frame2, width = 80, height = 5, yscrollcommand=scrollbar1.set)
+scrollbar.config(command=listbox1.yview)
 for item in data["completed"]:
     listbox1.insert("end", item)
 
@@ -122,7 +129,14 @@ curfew_label = tk.Label(spacer3, text = "Curfew at:", font = ("Times New Roman",
 
 # Curfew Frame
 curfew_frame = tk.Frame(main, width = 70, height = 50)
+curfew_frame1 = tk.Frame(curfew_frame, width = 20, height = 50)
+curfew_frame2 = tk.Frame(curfew_frame, width = 50, height = 50, bg = "yellow")
 
+set_curfew_butt = tk.Button(curfew_frame1, text = "Set",
+font = ("Times New Roman", 12), command = set_curfew, width = 12)
+
+clear_curfew_butt = tk.Button(curfew_frame1, text = "Clear",
+font = ("Times New Roman", 12), command = clear_curfew, width = 12)
 
 
 # Create Frame
@@ -144,7 +158,7 @@ upcoming_frame.pack(fill = "x")
 upcoming_frame1.grid(row = 0, column = 0)
 upcoming_frame2.grid(row = 0, column = 1)
 listbox.grid(row = 0, column = 0)
-scrollbar.grid(row = 0, column = 1, ipady = 28 )
+scrollbar.grid(row = 0, column = 1, ipady = 28)
 listbox_remove_butt.grid(row = 0, column = 2, padx = (0, 10))
 
 
@@ -162,6 +176,10 @@ spacer3.pack(fill = "x")
 curfew_label.grid(row = 0, column = 0)
 
 curfew_frame.pack(fill = "x")
+curfew_frame1.grid(row = 0, column = 0)
+curfew_frame2.grid(row = 0, column = 1)
+set_curfew_butt.grid(row = 0, column = 0, padx = (0, 10), pady = (0,10))
+clear_curfew_butt.grid(row = 1, column = 0, padx = (0, 10), pady = (0,10))
 
 spacer3.pack(fill = "x")
 
