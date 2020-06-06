@@ -18,38 +18,32 @@ from tkinter import simpledialog
 |     create new     +  |
 """
 
-
-# JSON Functions
+#JSON Functions
 def move_data(data, event, old, new):
     data[new].append(event)
     data[old].remove(event)
 
-
 def write_to_json(data, event, type):
     data[type].append(event)
-
 
 def delete_event(data, event, type):
     data[type].remove(event)
 
-
 def save_data(data):
     with open("data.txt", "w") as outfile:
         json.dump(data, outfile)
-
 
 def load_json_data():
     with open("data.txt") as json_file:
         data = json.load(json_file)
     return data
 
-
 data = load_json_data()
 
 
 # Functions for the buttons go here
 def create():
-    answer = simpledialog.askstring("Input", "New Task", parent=main)
+    answer = simpledialog.askstring("Input", "New Task", parent= main)
     # Json file should be here {upcoming:"answer"}
 
     # Displays the info on upcoming
@@ -58,17 +52,16 @@ def create():
     # Displays the info on upcoming
     listbox.insert("end", answer)
 
-
 def remove():
     event = listbox.get("active")
     listbox.delete(listbox.index("active"))
     move_data(data, event, "events", "completed")
     save_data(data)
-    ctypes.windll.user32.MessageBoxW(0, "Please remember to wear a mask and wash your hands now that you are completed with the task!", "Error", 1)
+    #ctypes.windll.user32.MessageBoxW(0, "Please remember to wear a mask and wash your hands now that you are completed with the task!", "Reminder", 0)
     listbox1.insert("end", event)
 
-
-
+def clear():
+    pass
 
 # This can be changed as we go along
 title = "Sanitation Alert"
@@ -79,73 +72,83 @@ root.title(title)
 root.resizable(False, False)
 root.configure()
 # Main Frame
-main = tk.Frame(root, width=70, height=400)
+main = tk.Frame(root, width = 70, height = 400 )
 
 # Welcome Frame
-welcome_frame = tk.Frame(main, width=70, height=60)
-welcome_label = tk.Label(welcome_frame, text="WELCOME BACK!", font=("Times New Roman", 50))
+welcome_frame = tk.Frame(main, width = 70, height = 60)
+welcome_label = tk.Label(welcome_frame, text = "WELCOME BACK!", font = ("Times New Roman", 50))
 
-spacer1 = tk.Frame(main, width=70, height=20)
+spacer1 = tk.Frame(main, width = 70, height = 20)
 
 # Upcoming Frame
-upcoming_frame = tk.Frame(main, width=70, height=50, bg=color)
+upcoming_frame = tk.Frame(main, width = 70, height = 50, bg = color)
 scrollbar = tk.Scrollbar(upcoming_frame, orient="vertical")
-listbox = tk.Listbox(upcoming_frame, width=80, height=5, yscrollcommand=scrollbar.set)
+listbox = tk.Listbox(upcoming_frame, width = 80, height = 5, yscrollcommand=scrollbar.set)
 scrollbar.config(command=listbox.yview)
 for item in data["events"]:
     listbox.insert("end", item)
 
-listbox_remove_butt = tk.Button(upcoming_frame, text="Remove Task",
-                                font=("Times New Roman", 12), command=remove)
 
-spacer2 = tk.Frame(main, width=70, height=20)
+listbox_remove_butt = tk.Button(upcoming_frame, text = "Complete Task",
+font = ("Times New Roman", 12), command = remove)
+
+
+spacer2 = tk.Frame(main, width = 70, height = 20)
 
 # Events Frame
-events_frame = tk.Frame(main, width=70, height=50, bg="#A4F178")
+events_frame = tk.Frame(main, width = 70, height = 50, bg = "#A4F178")
 scrollbar1 = tk.Scrollbar(events_frame, orient="vertical")
-listbox1 = tk.Listbox(events_frame, width=80, height=5, yscrollcommand=scrollbar.set)
+listbox1 = tk.Listbox(events_frame, width = 80, height = 5, yscrollcommand=scrollbar.set)
 scrollbar.config(command=listbox.yview)
 for item in data["completed"]:
     listbox1.insert("end", item)
 
-spacer3 = tk.Frame(main, width=70, height=20)
+listbox1_remove_butt = tk.Button(events_frame, text = "Clear",
+font = ("Times New Roman", 12), command = clear)
+
+
+spacer3 = tk.Frame(main, width = 70, height = 20)
 
 # Curfew Frame
-curfew_frame = tk.Frame(main, width=70, height=50, bg="#EFED85")
+curfew_frame = tk.Frame(main, width = 70, height = 50, bg = "#EFED85")
 
-spacer4 = tk.Frame(main, width=70, height=20)
+spacer4 = tk.Frame(main, width = 70, height = 20)
 
 # Create Frame
-create_frame = tk.Frame(main, width=70, height=40)
-create_butt = tk.Button(create_frame, text="Create New                                               +",
-                        font=("Times New Roman", 25), command=create)
+create_frame = tk.Frame(main, width = 70, height = 40)
+create_butt = tk.Button(create_frame, text = "Create New                                               +",
+font = ("Times New Roman", 25), command = create)
+
 
 # Place all widgets on screen
-main.pack(fill="both", expand=True, padx=30, pady=30)
+main.pack(fill="both", expand = True, padx = 30, pady = 30)
 
-welcome_frame.pack(fill="x")
-welcome_label.grid(row=0, column=0)
+welcome_frame.pack(fill = "x")
+welcome_label.grid(row = 0, column = 0)
 
-spacer1.pack(fill="x")
+spacer1.pack(fill = "x")
 
-upcoming_frame.pack(fill="x")
-listbox.grid(row=0, column=0)
-scrollbar.grid(row=0, column=1)
-listbox_remove_butt.grid(row=0, column=2)
+upcoming_frame.pack(fill = "x")
+listbox.grid(row = 0, column = 0)
+scrollbar.grid(row = 0, column = 1)
+listbox_remove_butt.grid(row = 0, column = 2)
 
-spacer2.pack(fill="x")
 
-events_frame.pack(fill="x")
-listbox1.grid(row=0, column=0)
-scrollbar1.grid(row=0, column=1)
+spacer2.pack(fill = "x")
 
-spacer3.pack(fill="x")
+events_frame.pack(fill = "x")
+listbox1.grid(row = 0, column = 0)
+scrollbar1.grid(row = 0, column = 1)
+listbox1_remove_butt.grid(row = 0, column = 2)
 
-curfew_frame.pack(fill="x")
+spacer3.pack(fill = "x")
 
-spacer4.pack(fill="x")
+curfew_frame.pack(fill = "x")
 
-create_frame.pack(fill="x")
-create_butt.grid(row=0, column=0)
+spacer4.pack(fill = "x")
+
+create_frame.pack(fill = "x")
+create_butt.grid(row = 0, column = 0)
+
 
 root.mainloop()
