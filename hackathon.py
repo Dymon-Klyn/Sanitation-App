@@ -18,6 +18,9 @@ from tkinter import simpledialog
 """
 
 #JSON Functions
+def move_data(data, event, old, new):
+    data[new].append(event)
+    data[old].remove(event)
 
 def write_to_json(data, event, type):
     data[type].append(event)
@@ -49,8 +52,12 @@ def create():
     listbox.insert("end", answer)
 
 def remove():
-    pass
-
+    event = listbox.get("active")
+    listbox.delete(listbox.index("active"))
+    move_data(data, event, "events", "completed")
+    save_data(data)
+    listbox1.insert("end", event)
+    
 # This can be changed as we go along
 title = "Sanitation Alert"
 color = "red"
@@ -73,6 +80,8 @@ upcoming_frame = tk.Frame(main, width = 70, height = 50, bg = color)
 scrollbar = tk.Scrollbar(upcoming_frame, orient="vertical")
 listbox = tk.Listbox(upcoming_frame, width = 80, height = 5, yscrollcommand=scrollbar.set)
 scrollbar.config(command=listbox.yview)
+for item in data["events"]:
+    listbox.insert("end", item)
 
 
 listbox_remove_butt = tk.Button(upcoming_frame, text = "Remove Task",
@@ -86,7 +95,8 @@ events_frame = tk.Frame(main, width = 70, height = 50, bg = "#A4F178")
 scrollbar1 = tk.Scrollbar(events_frame, orient="vertical")
 listbox1 = tk.Listbox(events_frame, width = 80, height = 5, yscrollcommand=scrollbar.set)
 scrollbar.config(command=listbox.yview)
-
+for item in data["completed"]:
+    listbox1.insert("end", item)
 
 
 spacer3 = tk.Frame(main, width = 70, height = 20)

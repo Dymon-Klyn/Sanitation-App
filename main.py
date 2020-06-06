@@ -19,6 +19,9 @@ from tkinter import simpledialog
 """
 
 #JSON Functions
+def move_data(data, event, old, new):
+    data[new].append(event)
+    data[old].remove(event)
 
 def write_to_json(data, event, type):
     data[type].append(event)

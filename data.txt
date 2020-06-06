@@ -1,1 +1,1 @@
-{"events": [], "upcoming": []}
+{"events": [], "upcoming": [], "completed": ["work", "go to work", "run"]}
