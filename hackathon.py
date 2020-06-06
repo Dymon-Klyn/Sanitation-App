@@ -5,6 +5,7 @@
 # We need a JSON File to keep track of the lists
 
 import tkinter as tk
+from tkinter import simpledialog
 
 # Look of the GUI
 """
@@ -17,6 +18,8 @@ import tkinter as tk
 """
 
 # Functions for the buttons go here
+def create():
+    answer = simpledialog.askstring("Input", "New Task", parent= main)
 
 # This can be changed as we go along
 title = "Sanitation Alert"
@@ -31,6 +34,7 @@ main = tk.Frame(root, width = 500, height = 400 )
 
 # Welcome Frame
 welcome_frame = tk.Frame(main, width = 500, height = 60)
+welcome_label = tk.Label(welcome_frame, text = "WELCOME BACK!", font = ("Times New Roman", 50))
 
 spacer1 = tk.Frame(main, width = 500, height = 20)
 
@@ -50,14 +54,16 @@ curfew_frame = tk.Frame(main, width = 500, height = 50, bg = "#EFED85")
 spacer4 = tk.Frame(main, width = 500, height = 20)
 
 # Create Frame
-create_frame = tk.Frame(main, width = 500, height = 40, bg = "#DBDBDB")
-
+create_frame = tk.Frame(main, width = 500, height = 40)
+create_butt = tk.Button(create_frame, text = "Create New                                               +",
+font = ("Times New Roman", 25), command = create)
 
 
 # Place all widgets on screen
 main.pack(fill="both", expand = True, padx = 30, pady = 30)
 
 welcome_frame.pack(fill = "x")
+welcome_label.grid(row = 0, column = 0)
 
 spacer1.pack(fill = "x")
 
@@ -74,7 +80,7 @@ curfew_frame.pack(fill = "x")
 spacer4.pack(fill = "x")
 
 create_frame.pack(fill = "x")
-
+create_butt.grid(row = 0, column = 0)
 
 
 root.mainloop()
