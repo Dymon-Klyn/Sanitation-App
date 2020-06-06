@@ -3,7 +3,7 @@
 # Make a nice GUI a very nice GUI
 
 # We need a JSON File to keep track of the lists
-
+import json
 import tkinter as tk
 from tkinter import simpledialog
 
@@ -17,14 +17,36 @@ from tkinter import simpledialog
 |     create new     +  |
 """
 
+#JSON Functions
+
+def write_to_json(data, event, type):
+    data[type].append(event)
+
+def delete_event(data, event, type):
+    data[type].remove(event)
+
+def save_data(data):
+    with open("data.txt", "w") as outfile:
+        json.dump(data, outfile)
+
+def load_json_data():
+    with open("data.txt") as json_file:
+        data = json.load(json_file)
+    return data
+
+data = load_json_data()
+
+
 # Functions for the buttons go here
 def create():
     answer = simpledialog.askstring("Input", "New Task", parent= main)
     # Json file should be here {upcoming:"answer"}
 
     # Displays the info on upcoming
-    for item in [1,2,3,4]:
-        listbox.insert("end", item)
+    write_to_json(data, answer, "events")
+    save_data(data)
+    # Displays the info on upcoming
+    listbox.insert("end", answer)
 
 # This can be changed as we go along
 title = "Sanitation Alert"
@@ -45,7 +67,13 @@ spacer1 = tk.Frame(main, width = 70, height = 20)
 
 # Upcoming Frame
 upcoming_frame = tk.Frame(main, width = 70, height = 50, bg = color)
-listbox = tk.Listbox(upcoming_frame, width = 80, height = 5)
+scrollbar = tk.Scrollbar(upcoming_frame, orient="vertical")
+listbox = tk.Listbox(upcoming_frame, width = 80, height = 5, yscrollcommand=scrollbar.set)
+scrollbar.config(command=listbox.yview)
+
+for item in data["events"]:
+    listbox.insert("end", item)
+
 
 spacer2 = tk.Frame(main, width = 70, height = 20)
 
@@ -74,7 +102,9 @@ welcome_label.grid(row = 0, column = 0)
 spacer1.pack(fill = "x")
 
 upcoming_frame.pack(fill = "x")
-listbox.pack()
+listbox.grid(row = 0, column = 0)
+scrollbar.grid(row =0, column = 1)
+
 
 spacer2.pack(fill = "x")
 
