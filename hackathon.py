@@ -1,12 +1,12 @@
-# Tool to reenter society after COVID-19
+## Tool to reenter society after COVID-19
 
 # We need a JSON File to keep track of the lists
 import json
 import ctypes
 import tkinter as tk
-from datetime import datetime
 from tkinter import simpledialog
 from tkinter import messagebox
+from datetime import datetime
 
 # Look of the GUI
 """
@@ -43,44 +43,41 @@ data = load_json_data()
 
 # Functions for the buttons go here
 def create():
-    answer = ""
-    while answer == "":
-        answer = simpledialog.askstring("Input", "New Task", parent=main)
-        if answer == "":
-            ctypes.windll.user32.MessageBoxW(0,"Please put a name for your task!","Error Message", 0)
-
+    answer = simpledialog.askstring("Input", "New Task", parent= main)
     # Json file should be here {upcoming:"answer"}
+
     # Displays the info on upcoming
     write_to_json(data, answer, "events")
     save_data(data)
     # Displays the info on upcoming
     listbox.insert("end", answer)
-    ctypes.windll.user32.MessageBoxW(0,"Please remember to wear a mask before you go outside!","Protect Yourself and Others", 0)
-
 
 def remove():
     event = listbox.get("active")
     listbox.delete(listbox.index("active"))
     move_data(data, event, "events", "completed")
     save_data(data)
-    messagebox.showinfo("Reminder", "Please remember to wash your hands now that you are completed with the task!")
+    messagebox.showinfo("Reminder", "Please remember to wear a mask and wash your hands now that you are completed with the task!")
     #ctypes.windll.user32.MessageBoxW(0, "Please remember to wear a mask and wash your hands now that you are completed with the task!", "Reminder", 0)
     listbox1.insert("end", event)
 
 def clear():
-    ctypes.windll.user32.MessageBoxW(0, "Are you sure you would like to clear your list?", "Confirmation", 1)
     listbox1.delete(0, "end")
     data["completed"] = []
     save_data(data)
 
 def set_curfew():
-    #try:
-        curfew = int(simpledialog.askstring("Input", "When does curfew start in military time?", parent= main))
-    #except TypeError:
-    #    ctypes.windll.user32.MessageBoxW(0, "Please type a number not letters.", "Input Validation", 0)
-    print(f"Curfew starts at {curfew} ")
+        curfew = simpledialog.askstring("Input", "When does curfew start?", parent= main)
+        time_of_day = simpledialog.askstring("Input", "AM or PM?", parent= main)
+        print(f"Curfew starts in {curfew} {time_of_day}")
 
-        #  try and except for curfew format
+        # try and except for curfew format
+
+        # for now curfew will start at 8 just for debugging
+        curfew = 20*60 # in minutes
+        
+        while int(datetime.now().strftime("%H"))* 60 +int(datetime.now().strftime("%M")) < curfew:
+            print("you can go outside")
 
 
 def clear_curfew():
@@ -151,7 +148,7 @@ font = ("Times New Roman", 12), command = set_curfew, width = 12)
 clear_curfew_butt = tk.Button(curfew_frame1, text = "Clear",
 font = ("Times New Roman", 12), command = clear_curfew, width = 12)
 
-curfew_label1 = tk.Label(curfew_frame2, text = "Curfew starts at :", font = ("Times New Roman", 15))
+curfew_label1 = tk.Label(curfew_frame2, text = "Curfew starts in :", font = ("Times New Roman", 15))
 curfew_label2 = tk.Label(curfew_frame3, text = "Hours  :  Minutes", font = ("Times New Roman", 8))
 
 # Create Frame
