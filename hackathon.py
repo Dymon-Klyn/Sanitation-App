@@ -57,11 +57,15 @@ def remove():
     listbox.delete(listbox.index("active"))
     move_data(data, event, "events", "completed")
     save_data(data)
-    #ctypes.windll.user32.MessageBoxW(0, "Please remember to wear a mask and wash your hands now that you are completed with the task!", "Reminder", 0)
+    ctypes.windll.user32.MessageBoxW(0, "Please remember to wear a mask and wash your hands now that you are completed with the task!", "Reminder", 0)
     listbox1.insert("end", event)
 
 def clear():
-    pass
+    listbox1.delete(0, "end")
+    data["completed"] = []
+    save_data(data)
+
+
 
 # This can be changed as we go along
 title = "Sanitation Alert"
